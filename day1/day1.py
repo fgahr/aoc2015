@@ -12,7 +12,7 @@ def part_two():
     position = basement_position()
     print('Part two solution: {}'.format(position))
 
-def basement_position():
+def basement_position() -> int:
     floor = 0
     position = 1
     for char in data:
@@ -22,7 +22,7 @@ def basement_position():
         position += 1
     raise Exception('Basement is never entered.')
 
-def move_elevator(floor, char):
+def move_elevator(floor: int, char: str) -> int:
     if char == '(':
         return floor + 1
     if char == ')':
@@ -38,5 +38,5 @@ def main():
     part_one()
     part_two()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

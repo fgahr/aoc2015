@@ -20,5 +20,17 @@ class TestDayFive(unittest.TestCase):
     def test_p1_example4(self):
         self.assertEqual(day5.part_one('dvszwmarrgswjxmb'), 0)
 
+    def test_p2_example1(self):
+        self.assertEqual(day5.part_two('qjhvhtzxzqqjkmpb'), 1)
+
+    def test_p2_example2(self):
+        self.assertEqual(day5.part_two('xxyxx'), 1)
+
+    def test_p2_example3(self):
+        self.assertEqual(day5.part_two('uurcxstgmygtbstg'), 0)
+
+    def test_p2_example4(self):
+        self.assertEqual(day5.part_two('ieodomkazucvgmuy'), 0)
+
 if __name__ == '__main__':
     unittest.main()

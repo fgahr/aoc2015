@@ -1,14 +1,24 @@
 #!/usr/bin/env python
 
+from typing import Callable
+
 def part_one(data: str) -> int:
     """Determine the number of nice strings in the data."""
-    num_nice_strings = 0
-    for line in data.splitlines():
-        if is_nice_string(line):
-            num_nice_strings += 1
-    return num_nice_strings
+    return num_lines_satisfying(data, is_nice_part_one)
 
-def is_nice_string(string: str) -> bool:
+def part_two(data: str) -> int:
+    """Determine the number of nice strings in the data."""
+    return num_lines_satisfying(data, is_nice_part_two)
+
+def num_lines_satisfying(data: str, pred: Callable[[str], bool]) -> int:
+    """The number of lines in data which satisfy the predicate pred."""
+    num_matching_strings = 0
+    for line in data.splitlines():
+        if pred(line):
+            num_matching_strings += 1
+    return num_matching_strings
+
+def is_nice_part_one(string: str) -> bool:
     num_vowels = 0
     has_double_letter = False
     previous_char = ''
@@ -21,6 +31,21 @@ def is_nice_string(string: str) -> bool:
             has_double_letter = True
         previous_char = char
     return has_double_letter and (num_vowels > 2)
+
+def is_nice_part_two(string: str) -> bool:
+    has_double_letter_with_separator = False
+    has_repeated_pair = False
+    for i in range(len(string)):
+        if i > 1 and string[i] == string[i - 2]:
+            has_double_letter_with_separator = True
+        if i > 0 and pair_at_index_occurs_in_tail(i, string):
+            has_repeated_pair = True
+    return has_double_letter_with_separator and has_repeated_pair
+
+def pair_at_index_occurs_in_tail(i: int, string: str) -> bool:
+    pair = string[i-1] + string[i]
+    tail = string[(i+1):]
+    return tail.count(pair) > 0
 
 def is_illegal_sequence(seq: str) -> bool:
     return seq == 'ab' or seq== 'cd' or seq == 'pq' or seq == 'xy'
@@ -35,6 +60,7 @@ def read_data() -> str:
 def main():
     data = read_data()
     print('Part one solution: {}'.format(part_one(data)))
+    print('Part two solution: {}'.format(part_two(data)))
 
 if __name__ == '__main__':
     main()

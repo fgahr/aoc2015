@@ -12,11 +12,7 @@ def part_two(data: str) -> int:
 
 def num_lines_satisfying(data: str, pred: Callable[[str], bool]) -> int:
     """The number of lines in data which satisfy the predicate pred."""
-    num_matching_strings = 0
-    for line in data.splitlines():
-        if pred(line):
-            num_matching_strings += 1
-    return num_matching_strings
+    return len(list(filter(pred, data.splitlines())))
 
 def is_nice_part_one(string: str) -> bool:
     num_vowels = 0
@@ -45,13 +41,13 @@ def is_nice_part_two(string: str) -> bool:
 def pair_at_index_occurs_in_tail(i: int, string: str) -> bool:
     pair = string[i-1] + string[i]
     tail = string[(i+1):]
-    return tail.count(pair) > 0
+    return pair in tail
 
 def is_illegal_sequence(seq: str) -> bool:
     return seq == 'ab' or seq== 'cd' or seq == 'pq' or seq == 'xy'
 
 def is_vowel(char: str) -> bool:
-    return 'aeiou'.count(char) > 0
+    return char in 'aeiou'
 
 def read_data() -> str:
     with open('input.txt') as input:

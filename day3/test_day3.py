@@ -3,8 +3,8 @@
 import unittest
 import day3
 
-class TestDayThree(unittest.TestCase):
 
+class TestDayThree(unittest.TestCase):
     def test_p1_simple_step(self):
         self.assertEqual(day3.part_one('>'), 2)
 
@@ -22,6 +22,7 @@ class TestDayThree(unittest.TestCase):
 
     def test_p2_linear(self):
         self.assertEqual(day3.part_two('^v^v^v^v^v'), 11)
+
 
 if __name__ == '__main__':
     unittest.main()

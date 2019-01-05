@@ -3,8 +3,8 @@
 import unittest
 import day1
 
-class TestDayOne(unittest.TestCase):
 
+class TestDayOne(unittest.TestCase):
     def test_p1_to_floor_0(self):
         self.assertEqual(day1.part_one('(())'), 0)
         self.assertEqual(day1.part_one('()()'), 0)
@@ -27,6 +27,7 @@ class TestDayOne(unittest.TestCase):
 
     def test_p2_five_steps(self):
         self.assertEqual(day1.part_two('()())'), 5)
+
 
 if __name__ == '__main__':
     unittest.main()

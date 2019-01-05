@@ -3,8 +3,8 @@
 import unittest
 import day5
 
-class TestDayFive(unittest.TestCase):
 
+class TestDayFive(unittest.TestCase):
     def test_p1_example1(self):
         self.assertEqual(day5.part_one('ugknbfddgicrmopn'), 1)
 
@@ -31,6 +31,7 @@ class TestDayFive(unittest.TestCase):
 
     def test_p2_example4(self):
         self.assertEqual(day5.part_two('ieodomkazucvgmuy'), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

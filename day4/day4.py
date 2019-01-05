@@ -15,19 +15,17 @@ def smallest_number_satisfying(data: str, pred: Callable[[str], bool]) -> int:
     "The smallest number generating a hash from data which satisfies the given predicate."
     num = 1
     while True:
-        res = advent_coin_hash(data, num, pred)
-        if res:
+        res, ok = advent_coin_hash(data, num, pred)
+        if ok:
             return num
         num += 1
 
-def advent_coin_hash(data: str, num: int, pred: Callable[[str], bool]) -> str:
-    """Return the hash from data and num if it satisfies pred, else None."""
+def advent_coin_hash(data: str, num: int, pred: Callable[[str], bool]) -> (str, bool):
+    """Return the hash from data and num, and whether it satisfies pred."""
     h = hashlib.new('md5')
     h.update((data + str(num)).encode('utf-8'))
     result = h.hexdigest()
-    if pred(result):
-        return result
-    return None
+    return result, pred(result)
 
 def starts_with_five_zeros(md5_hash: str) -> bool:
     return md5_hash.startswith('00000')

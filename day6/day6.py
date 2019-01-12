@@ -112,7 +112,7 @@ def part_one(data: str) -> int:
     return board.num_lights_lit()
 
 
-def part_one(data: str) -> int:
+def part_two(data: str) -> int:
     """Determine the number of lights turned on after following the instructions from data."""
     board = apply_instructions(data, LightBoardBrightnessLevels(1000))
     return board.num_lights_lit()
@@ -147,6 +147,7 @@ def read_data() -> str:
 def main():
     data = read_data()
     print('Part one solution: {}'.format(part_one(data)))
+    print('Part two solution: {}'.format(part_two(data)))
 
 
 if __name__ == '__main__':

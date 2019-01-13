@@ -35,7 +35,6 @@ def examine_routes(data: str, selector: Callable[[int, int], int]) -> int:
         # Store distances both ways for convenience.
         distances[source][destination] = dist
         distances[destination][source] = dist
-        # Make sure we have a reasonable (high) starting point later.
 
     # Distance of route as encountered in input; starting point for optimization.
     extremal_distance = route_distance(places, distances)

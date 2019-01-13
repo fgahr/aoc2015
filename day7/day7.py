@@ -12,6 +12,12 @@ lshift_pattern = re.compile(
     r'(?P<in>\w+) LSHIFT (?P<shift>\d+) -> (?P<out>\w+)')
 rshift_pattern = re.compile(
     r'(?P<in>\w+) RSHIFT (?P<shift>\d+) -> (?P<out>\w+)')
+
+# NOTE: In the input this solution is based upon, AND was sometimes against
+# a fixed value. In those cases, the fixed value was always the left argument.
+# The same was not encountered for OR; however, it was still included here.
+# If fixed values appear as the right argument for your input, this solution
+# requires adjustments to accomodate.
 fixed_and_pattern = re.compile(r'(?P<fix>\d+) AND (?P<in>\w+) -> (?P<out>\w+)')
 and_pattern = re.compile(r'(?P<in1>\w+) AND (?P<in2>\w+) -> (?P<out>\w+)')
 fixed_or_pattern = re.compile(r'(?P<fix>\d+) OR (?P<in>\w+) -> (?P<out>\w+)')
@@ -97,6 +103,7 @@ def get_wire(line: str) -> (str, Wire):
 def determine_current(wire_name: str,
                       wires: Mapping[str, Wire]) -> (int, Mapping[str, Wire]):
     def get_current(name: str) -> int:
+        """Recursively calculate the current on wires as needed, memoize results."""
         wire = wires[name]
         if not wire:
             raise LookupError('No wire found with name: {}'.format(name))
@@ -107,6 +114,7 @@ def determine_current(wire_name: str,
         if num_args == 1:
             req = wire.prereq[0]
             result = Wire(value=get_current(req))
+            # Memoize.
             wires[req] = result
             return wire.func(result.value)
 
@@ -115,6 +123,7 @@ def determine_current(wire_name: str,
             res1, res2 = Wire(value=get_current(req1)), Wire(
                 value=get_current(req2))
             value = wire.func(res1.value, res2.value)
+            # Memoize.
             wires[name] = Wire(value=value)
             return value
 

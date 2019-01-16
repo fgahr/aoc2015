@@ -9,9 +9,9 @@ ALPHABET = 'abcdefghijklmnopqrstuvwxyz'
 ALPHABET_SIZE = len(ALPHABET)
 
 
-def part_one(data: str) -> str:
+def next_valid_password(data: str) -> str:
     """The next valid password, starting from data."""
-    password = password_to_number(data)
+    password = next_password(password_to_number(data))
     while not is_valid_password(password):
         password = next_password(password)
     return number_to_password(password)
@@ -126,7 +126,10 @@ def read_data() -> str:
 def main():
     """Solve the day 11 puzzles."""
     data = read_data()
-    print('Part one solution: {}'.format(part_one(data)))
+    p1_solution = next_valid_password(data)
+    p2_solution = next_valid_password(p1_solution)
+    print('Part one solution: {}'.format(p1_solution))
+    print('Part two solution: {}'.format(p2_solution))
 
 
 if __name__ == '__main__':

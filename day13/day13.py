@@ -14,6 +14,23 @@ def part_one(data: str) -> int:
     """The change in happiness for optimal seating according to data."""
     names, happiness_changes = parse_input(data)
     names = list(names)
+    return optimal_seating_score(names, happiness_changes)
+
+
+def part_two(data: str) -> int:
+    """The change in happiness for optimal seating according to data.
+
+    You yourself are included at the table as a neutral person."""
+    names, happiness_changes = parse_input(data)
+    names = list(names)
+    names.append('You')
+    return optimal_seating_score(names, happiness_changes)
+
+
+def optimal_seating_score(
+        names: List[str],
+        happiness_changes: Mapping[str, Mapping[str, int]]) -> int:
+    """The score of the optimal seating configuration for names."""
     seating_orders = list(itertools.permutations(names))
     maximum_change = happiness_change(seating_orders[0], happiness_changes)
     for seating_order in seating_orders:
@@ -76,6 +93,7 @@ def main():
     """Solve the day 13 puzzles."""
     data = read_data()
     print('Part one solution: {}'.format(part_one(data)))
+    print('Part two solution: {}'.format(part_two(data)))
 
 
 if __name__ == '__main__':

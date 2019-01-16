@@ -2,6 +2,7 @@
 """This module solves the day 12 problems of Advent of Code 2015."""
 
 import re
+import json
 
 
 def part_one(data: str) -> int:
@@ -10,12 +11,27 @@ def part_one(data: str) -> int:
     # numbers. Simply including non-numbers outside the matching group causes
     # problems if two numbers are separated by a single token, e.g. '1,2'.
     pattern = re.compile(r'(?<=[^0-9])(?P<number>-?\d+)(?![0-9])')
-    return sum(map(int, (pattern.findall(data))))
+    return sum(map(int, pattern.findall(data)))
 
 
 def part_two(data: str) -> int:
-    """Sum all numbers outside of structures that have a \"red\" property."""
-    return 0
+    """Sum all numbers outside of maps that have a \"red\" property."""
+    json_content = json.loads(data)
+    return sum_non_red(json_content)
+
+def sum_non_red(obj: object) -> int:
+    """The sum of all numbers except from maps with a \"red\" property."""
+    if type(obj) == int:
+        return obj
+    if type(obj) == str:
+        return 0
+    if type(obj) == list:
+        return sum(map(sum_non_red, obj))
+    if type(obj) == dict:
+        if 'red' in obj.values():
+            return 0
+        return sum(map(sum_non_red, obj.values()))
+    raise TypeError('Unexpected type: {}'.format(type(obj)))
 
 
 def read_data() -> str:

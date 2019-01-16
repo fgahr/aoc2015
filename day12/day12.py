@@ -21,13 +21,13 @@ def part_two(data: str) -> int:
 
 def sum_non_red(obj: object) -> int:
     """The sum of all numbers except from maps with a \"red\" property."""
-    if type(obj) == int:
+    if isinstance(obj, int):
         return obj
-    if type(obj) == str:
+    if isinstance(obj, str):
         return 0
-    if type(obj) == list:
+    if isinstance(obj, list):
         return sum(map(sum_non_red, obj))
-    if type(obj) == dict:
+    if isinstance(obj, dict):
         if 'red' in obj.values():
             return 0
         return sum(map(sum_non_red, obj.values()))

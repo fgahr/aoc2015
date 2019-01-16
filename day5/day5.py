@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""Day 5: Doesn't He Have Intern-Elves For This? -- Advent of Code 2015"""
 
 from typing import Callable
 
@@ -19,6 +20,7 @@ def num_lines_satisfying(data: str, pred: Callable[[str], bool]) -> int:
 
 
 def is_nice_part_one(string: str) -> bool:
+    """True of the string is nice according to part one rules."""
     num_vowels = 0
     has_double_letter = False
     previous_char = ''
@@ -34,9 +36,10 @@ def is_nice_part_one(string: str) -> bool:
 
 
 def is_nice_part_two(string: str) -> bool:
+    """True of the string is nice according to part two rules."""
     has_double_letter_with_separator = False
     has_repeated_pair = False
-    for i in range(len(string)):
+    for i, _ in enumerate(string):
         if i > 1 and string[i] == string[i - 2]:
             has_double_letter_with_separator = True
         if i > 0 and pair_at_index_occurs_in_tail(i, string):
@@ -45,25 +48,30 @@ def is_nice_part_two(string: str) -> bool:
 
 
 def pair_at_index_occurs_in_tail(i: int, string: str) -> bool:
+    """True if the pair ending at the given index also occurs in its tail."""
     pair = string[i - 1] + string[i]
     tail = string[(i + 1):]
     return pair in tail
 
 
 def is_illegal_sequence(seq: str) -> bool:
-    return seq == 'ab' or seq == 'cd' or seq == 'pq' or seq == 'xy'
+    """True if seq is one of the forbidden sequences."""
+    return seq in ['ab', 'cd', 'pq', 'xy']
 
 
 def is_vowel(char: str) -> bool:
+    """True if char is a vowel."""
     return char in 'aeiou'
 
 
 def read_data() -> str:
-    with open('input.txt') as input:
-        return input.read()
+    """Read the data from the input file."""
+    with open('input.txt') as input_file:
+        return input_file.read()
 
 
 def main():
+    """Solve the day 5 puzzles."""
     data = read_data()
     print('Part one solution: {}'.format(part_one(data)))
     print('Part two solution: {}'.format(part_two(data)))

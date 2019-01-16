@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""Day 3: Perfectly Spherical Houses in a Vacuum -- Advent of Code 2015"""
 
 from typing import List
 from typing import NewType
@@ -7,7 +8,7 @@ Coord = NewType('coordinate', (int, int))
 
 
 def part_one(data: str) -> int:
-    """Determine the number of houses receiving at least one present from Santa."""
+    """The number of houses receiving at least one present."""
     distinct_places = {place for place in places(data)}
     return len(distinct_places)
 
@@ -23,6 +24,7 @@ def part_two(data: str) -> int:
 
 
 def places(data: str) -> List[Coord]:
+    """The places visited after following the instructions from data."""
     current_position = (0, 0)
     positions = [current_position]
     for instruction in data:
@@ -38,24 +40,28 @@ def places(data: str) -> List[Coord]:
     return positions
 
 
-def move_up(p: Coord) -> Coord:
-    x, y = p
-    return (x, y + 1)
+def move_up(place: Coord) -> Coord:
+    """Move up from place."""
+    x_place, y_place = place
+    return (x_place, y_place + 1)
 
 
-def move_down(p: Coord) -> Coord:
-    x, y = p
-    return (x, y - 1)
+def move_down(place: Coord) -> Coord:
+    """Move down from place."""
+    x_place, y_place = place
+    return (x_place, y_place - 1)
 
 
-def move_left(p: Coord) -> Coord:
-    x, y = p
-    return (x - 1, y)
+def move_left(place: Coord) -> Coord:
+    """Move left from place."""
+    x_place, y_place = place
+    return (x_place - 1, y_place)
 
 
-def move_right(p: Coord) -> Coord:
-    x, y = p
-    return (x + 1, y)
+def move_right(place: Coord) -> Coord:
+    """Move right from place."""
+    x_place, y_place = place
+    return (x_place + 1, y_place)
 
 
 def split_instructions(data: str) -> (str, str):
@@ -69,17 +75,19 @@ def split_instructions(data: str) -> (str, str):
         santa, robo, remaining = remaining[0], remaining[1], remaining[2:]
         santa_instructions = santa_instructions + santa
         robo_instructions = robo_instructions + robo
-    if len(remaining) > 0:
+    if remaining:
         santa_instructions = santa_instructions + remaining
     return santa_instructions, robo_instructions
 
 
 def read_data() -> str:
-    with open('input.txt') as input:
-        return input.readline()
+    """Read the data from the input file."""
+    with open('input.txt') as input_file:
+        return input_file.readline()
 
 
 def main():
+    """Solve the day 3 puzzles."""
     data = read_data()
     print('Part one solution: {}'.format(part_one(data)))
     print('Part two solution: {}'.format(part_two(data)))

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""This module solves the day 11 problems of Advent of Code 2015."""
+"""Day 11: Corporate Policy -- Advent of Code 2015"""
 
 from typing import List, Iterable, TypeVar
 

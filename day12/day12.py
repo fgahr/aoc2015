@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""This module solves the day 12 problems of Advent of Code 2015."""
+"""Day 12: JSAbacusFramework.io -- Advent of Code 2015"""
 
 import re
 import json

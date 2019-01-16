@@ -29,6 +29,18 @@ class TestDayEleven(unittest.TestCase):
     def test_p1_empty_map(self):
         self.assertEqual(day12.part_one('{}'), 0)
 
+    def test_p2_simple_list(self):
+        self.assertEqual(day12.part_two('[1,2,3]'), 6)
+
+    def test_p2_ignore_map(self):
+        self.assertEqual(day12.part_two('[1, {"c":"red", "b":2}, 3]'), 4)
+
+    def test_p2_ignore_all(self):
+        self.assertEqual(day12.part_two('{"d":"red","e":[1,2,3,4],"f":5}'), 0)
+
+    def test_p2_no_ignore_array(self):
+        self.assertEqual(day12.part_two('[1,"red",5]'), 6)
+
 
 if __name__ == '__main__':
     unittest.main()

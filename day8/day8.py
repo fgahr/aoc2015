@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""Day 8: Matchsticks -- Advent of Code 2015"""
 
 
 def part_one(data: str) -> int:
@@ -18,17 +19,27 @@ def part_two(data: str) -> int:
 
 
 def parsed_length(line: str) -> int:
+    """The length of the string after evaluating."""
     return len(eval(line))
 
+
 def escaped_length(line: str) -> int:
+    """The length of the string after performing the necessary escapes.
+
+    Assumes that backslashes and quotes are escaped, and the string is
+    surrounded with quotes."""
+    # +2 for surrounding quotes, rest is for normal escapes.
     return len(line) + 2 + line.count(r'"') + line.count('\\')
 
+
 def read_data() -> str:
-    with open('input.txt') as input:
-        return input.read()
+    """Read the data from the input file."""
+    with open('input.txt') as input_file:
+        return input_file.read()
 
 
 def main():
+    """Solve the day 8 puzzles."""
     data = read_data()
     print('Part one solution: {}'.format(part_one(data)))
     print('Part two solution: {}'.format(part_two(data)))

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+"""Day 9: All in a Single Night -- Advent of Code 2015"""
 
 from typing import Callable
 from typing import Mapping
@@ -6,7 +7,7 @@ from typing import List
 import re
 import itertools
 
-input_pattern = re.compile(r'(?P<src>\w+) to (?P<dest>\w+) = (?P<dist>\d+)')
+INPUT_PATTERN = re.compile(r'(?P<src>\w+) to (?P<dest>\w+) = (?P<dist>\d+)')
 
 
 def part_one(data: str) -> int:
@@ -20,6 +21,7 @@ def part_two(data: str) -> int:
 
 
 def examine_routes(data: str, selector: Callable[[int, int], int]) -> int:
+    """From the routes in data, select a length based on the given function."""
     places = []
     distances = {}
     for line in data.splitlines():
@@ -46,29 +48,32 @@ def examine_routes(data: str, selector: Callable[[int, int], int]) -> int:
 
 def route_distance(route: List[str],
                    distances: Mapping[str, Mapping[str, int]]) -> int:
-    route_distance = 0
+    """The cumulative distance following the given route."""
+    distance = 0
     previous = None
     for current in route:
         if not previous:
             previous = current
             continue
-        route_distance += distances[previous][current]
+        distance += distances[previous][current]
         previous = current
-    return route_distance
+    return distance
 
 
 def parse_line(line: str) -> (str, str, int):
     """Get source, destination, and distance from an input line."""
-    m = input_pattern.fullmatch(line)
-    return (m.group('src'), m.group('dest'), int(m.group('dist')))
+    match = INPUT_PATTERN.fullmatch(line)
+    return (match.group('src'), match.group('dest'), int(match.group('dist')))
 
 
 def read_data() -> str:
-    with open('input.txt') as input:
-        return input.read()
+    """Read the data from the input file."""
+    with open('input.txt') as input_file:
+        return input_file.read()
 
 
 def main():
+    """Solve the day 9 puzzles."""
     data = read_data()
     print('Part one solution: {}'.format(part_one(data)))
     print('Part two solution: {}'.format(part_two(data)))

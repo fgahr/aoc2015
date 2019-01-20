@@ -146,22 +146,22 @@ def signal_direct() -> Callable[[int], int]:
 
 def signal_lshift(shift: int) -> Callable[[int], int]:
     """A circuit element performing a fixed LSHIFT on a signal."""
-    return lambda x: limit_signal(unsigned(x) << shift)
+    return lambda x: limit_signal(x << shift)
 
 
 def signal_rshift(shift: int) -> Callable[[int], int]:
     """A circuit element performing a fixed RSHIFT on a signal."""
-    return lambda x: limit_signal(unsigned(x) >> shift)
+    return lambda x: limit_signal(x >> shift)
 
 
 def signal_not() -> Callable[[int], int]:
     """A circuit element performing bitwise NOT on a signal."""
-    return lambda x: limit_signal(~unsigned(x))
+    return lambda x: limit_signal(~x)
 
 
 def signal_and() -> Callable[[int, int], int]:
     """A circuit element performing bitwise AND on two signals."""
-    return lambda x, y: limit_signal(unsigned(x) & unsigned(y))
+    return lambda x, y: limit_signal(x & y)
 
 
 def signal_fixed_and(value: int) -> Callable[[int], int]:
@@ -171,19 +171,12 @@ def signal_fixed_and(value: int) -> Callable[[int], int]:
 
 def signal_or() -> Callable[[int, int], int]:
     """A circuit element performing a bitwise OR on two signals."""
-    return lambda x, y: limit_signal(unsigned(x) | unsigned(y))
+    return lambda x, y: limit_signal(x | y)
 
 
 def signal_fixed_or(value: int) -> Callable[[int], int]:
     """A circuit element performing a bitwise OR with a fixed value."""
     return lambda x: signal_or()(x, value)
-
-
-def unsigned(signal: int) -> int:
-    """Convert an integer to the bit representation of an unsigned int.
-
-    Changes the value. Subsequent processing must be aware of this."""
-    return signal + (1 << 32)
 
 
 def limit_signal(signal: int) -> int:
@@ -194,7 +187,7 @@ def limit_signal(signal: int) -> int:
 def read_data() -> str:
     """Read the data from the input file."""
     with open('input.txt') as input_file:
-        return input_file.read.read()
+        return input_file.read()
 
 
 def main():

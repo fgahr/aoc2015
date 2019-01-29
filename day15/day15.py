@@ -18,6 +18,8 @@ def part_one(data: str) -> int:
     # There are 4 ingredients total in the input, so nothing is lost here.
     quantities = [total_quantity // len(ingredients) for _ in ingredients]
     while True:
+        # The scoring function is convex (or rather, its negative is). Hence
+        # we can trace a path to the maximum by following local adjustments.
         next_quantities = max_neighboring_quantities(ingredients, quantities)
         if next_quantities == quantities:
             # Reached maximum point

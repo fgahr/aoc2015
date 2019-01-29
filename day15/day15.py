@@ -32,7 +32,7 @@ def max_neighboring_quantities(ingredients: List[Ingredient],
     indices = range(0, len(quantities))
     best_neighbor = quantities
     best_score = dough_score(ingredients, quantities)
-    for plus, minus in itertools.product(indices, indices):
+    for plus, minus in itertools.product(indices, repeat=2):
         if plus == minus:
             continue
         quants = [q for q in quantities]

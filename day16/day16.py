@@ -1,12 +1,49 @@
 #!/usr/bin/env python
 """Day 16: Aunt Sue -- Advent of Code 2015"""
 
-from typing import Mapping
+from typing import Mapping, Callable
 import re
 
 
 def part_one(data: str) -> int:
-    """Find the number of the Aunt Sue which sent you the gift."""
+    """Find the number of the Aunt Sue who sent you the gift."""
+
+    def matches_p1(info: Mapping[str, int],
+                   test_result: Mapping[str, int]) -> bool:
+        """True if the info matches the test result."""
+        for key, value in info.items():
+            if test_result[key] != value:
+                return False
+        return True
+
+    return find_matching_aunt(matches_p1, data)
+
+
+def part_two(data: str) -> int:
+    """Find the number of the Aunt Sue who ACTUALLY sent you the gift."""
+
+    def matches_p2(info: Mapping[str, int],
+                   result: Mapping[str, int]) -> bool:
+        """True if the info ACTUALLY matches the test result."""
+        for key, value in info.items():
+            if key in ['cats', 'trees']:
+                if value <= result[key]:
+                    return False
+            elif key in ['pomeranians', 'goldfish']:
+                if value >= result[key]:
+                    return False
+            else:
+                if result[key] != value:
+                    return False
+        return True
+
+    return find_matching_aunt(matches_p2, data)
+
+
+def find_matching_aunt(
+        predicate: Callable[[Mapping[str, int], Mapping[str, int]], bool],
+        data: str) -> int:
+    """The number of the aunt from data satisfying the predicate."""
     # The result the aunt we are looking for needs to match.
     test_result = {
         'children': 3,
@@ -20,18 +57,10 @@ def part_one(data: str) -> int:
         'cars': 2,
         'perfumes': 1
     }
-
-    def info_matches(info: Mapping[str, int]) -> bool:
-        """True if the info matches the test result."""
-        for key, value in info.items():
-            if test_result[key] != value:
-                return False
-        return True
-
     matches = []
     for line in data.splitlines():
         num, info = parse_aunt_information(line)
-        if info_matches(info):
+        if predicate(info, test_result):
             matches.append(num)
 
     if len(matches) > 1:
@@ -65,6 +94,7 @@ def main():
     """Solve the day 16 puzzles."""
     data = read_data()
     print('Part one solution: {}'.format(part_one(data)))
+    print('Part two solution: {}'.format(part_two(data)))
 
 
 if __name__ == '__main__':

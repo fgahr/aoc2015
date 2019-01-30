@@ -27,6 +27,37 @@ def part_one(data: str) -> int:
         quantities = next_quantities
 
 
+def part_two(data: str) -> int:
+    """The best possible score of 500 calories cookies given the input data."""
+    total_quantity = 100
+    calory_goal = 500
+    by_calories_asc = lambda ingredient: -ingredient.calories
+    ingredients = [parse_ingredient(line) for line in data.splitlines()]
+    ingredients.sort(key=by_calories_asc)
+    calories = [ingredient.calories for ingredient in ingredients]
+
+    # FIXME: This code produces the right answer, but poorly.
+    # It is slow and is limited to working properly with four ingredients.
+    # This assumption is violated in the test, although it passes regardless.
+    # Also, if there were only one ingredient with non-zero calories, it would
+    # break.
+    best_score = 0
+    for i in range(0, calory_goal // calories[0]):
+        remaining_calories = calory_goal - i * calories[1]
+        for j in range(0, remaining_calories // calories[1]):
+            remaining_ingredients = total_quantity - i - j
+            for k in range(0, remaining_ingredients + 1):
+                for l in range(0, remaining_ingredients - k + 1):
+                    quantities = [i, j, k, l]
+                    total_calories = sum(
+                        [q * c for q, c in zip(quantities, calories)])
+                    if total_calories == 500:
+                        best_score = max(best_score,
+                                         dough_score(ingredients, quantities))
+
+    return best_score
+
+
 def max_neighboring_quantities(ingredients: List[Ingredient],
                                quantities: List[int]) -> List[int]:
     """The quantities yielding the best dough, varying the given
@@ -68,8 +99,8 @@ def dough_score(ingredients: List[Ingredient], quantities: List[int]) -> int:
 def parse_ingredient(line: str) -> Ingredient:
     """Parse an ingredient description from the input."""
     pattern = re.compile(
-        r'(?P<name>\w+): capacity (?P<cap>-?\d+), durability (?P<dur>-?\d+), ' +
-        r'flavor (?P<fla>-?\d+), texture (?P<tex>-?\d+), ' +
+        r'(?P<name>\w+): capacity (?P<cap>-?\d+), durability (?P<dur>-?\d+), '
+        + r'flavor (?P<fla>-?\d+), texture (?P<tex>-?\d+), ' +
         r'calories (?P<cal>-?\d+)')
     match = pattern.fullmatch(line)
     name = match.group('name')
@@ -97,6 +128,7 @@ def main():
     """Solve the day 15 puzzles."""
     data = read_data()
     print('Part one solution: {}'.format(part_one(data)))
+    print('Part two solution: {}'.format(part_two(data)))
 
 
 if __name__ == '__main__':

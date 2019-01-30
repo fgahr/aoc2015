@@ -67,11 +67,11 @@ def get_containers(data: str) -> List[int]:
 def read_data() -> str:
     """Read the data from the `input.txt` file."""
     with open('input.txt') as input_file:
-        return input_file.read().rstrip()
+        return input_file.read()
 
 
 def main():
-    """Solve the day 16 puzzles."""
+    """Solve the day 17 puzzles."""
     data = read_data()
     print('Part one solution: {}'.format(part_one(data)))
     print('Part two solution: {}'.format(part_two(data)))

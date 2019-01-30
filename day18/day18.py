@@ -15,6 +15,27 @@ def part_one(data: str, size=100, steps=100) -> int:
     return num_lights(board)
 
 
+def part_two(data: str, size=100, steps=100) -> int:
+    """The number of burning lights on the defective board after the given
+    number of steps.
+
+    The defect manifests itself in that the four corner lights are always
+    turned on."""
+    board = parse_board(data)
+    board[0][0] = True
+    board[0][size - 1] = True
+    board[size - 1][0] = True
+    board[size - 1][size - 1] = True
+
+    for _ in range(0, steps):
+        board = next_board(board, size)
+        board[0][0] = True
+        board[0][size - 1] = True
+        board[size - 1][0] = True
+        board[size - 1][size - 1] = True
+    return num_lights(board)
+
+
 def next_board(board: List[List[bool]], size: int) -> List[List[bool]]:
     """The board in the next step of the animation.
     It is based on the currently burning lights."""
@@ -108,6 +129,7 @@ def main():
     """Solve the day 18 puzzles."""
     data = read_data()
     print('Part one solution: {}'.format(part_one(data)))
+    print('Part two solution: {}'.format(part_two(data)))
 
 
 if __name__ == '__main__':

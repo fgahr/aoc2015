@@ -5,7 +5,7 @@ import day18
 
 
 
-class TestDaySeventeen(unittest.TestCase):
+class TestDayEighteen(unittest.TestCase):
     def test_p1_example(self):
         example_data = '\n'.join(
             ['.#.#.#', '...##.', '#....#', '..#...', '#.#..#', '####..'])
